@@ -8,11 +8,16 @@ class HomePage extends StatelessWidget {
     int days = 30;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("catalog app"),
+        backgroundColor: Colors.deepPurple,
+        title: const Text(
+          "catalog app",
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true, // This centers the title text
       ),
       body: Center(
         child: Container(
-          child: Text("welcome to $days days"),
+          child: Text("Welcome to $days days"),
         ),
       ),
       drawer: const Drawer(),

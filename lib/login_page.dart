@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.deepPurple,
                             borderRadius:
                                 BorderRadius.circular(changeButton ? 25 : 8),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 color: Colors.black26,
                                 blurRadius: 10,

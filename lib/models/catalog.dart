@@ -1,60 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 class CatalogModel {
-  final List<Item> items = [
-    Item(
-      id: 1,
-      name: "iPhone 12",
-      desc: "Apple's flagship smartphone",
-      price: 80000,
-      color: "#ff22ff",
-      image:
-          "https://tse2.mm.bing.net/th?id=OIP.YjJzMzAznQzX5oa0vW_hEQHaKJ&pid=Api&P=0&h=220",
-    ),
-    Item(
-      id: 2,
-      name: "Samsung Galaxy S21",
-      desc: "Samsung's premium smartphone",
-      price: 75000,
-      color: "#ffcc00",
-      image:
-          "https://tse4.mm.bing.net/th?id=OIP.LZMtUw5oXeFQO42b8x8O5QHaJi&pid=Api&P=0&h=220",
-    ),
-    Item(
-      id: 3,
-      name: "Google Pixel 5",
-      desc: "Google's own Android phone",
-      price: 65000,
-      color: "#00ff00",
-      image:
-          "https://tse2.mm.bing.net/th?id=OIP.hNPQcCknyV1dcgUSCIA8IQHaMl&pid=Api&P=0&h=220",
-    ),
-    Item(
-      id: 4,
-      name: "OnePlus 9",
-      desc: "OnePlus flagship with Snapdragon",
-      price: 70000,
-      color: "#ff0000",
-      image:
-          "https://tse2.mm.bing.net/th?id=OIP.hNPQcCknyV1dcgUSCIA8IQHaMl&pid=Api&P=0&h=220",
-    ),
-    Item(
-      id: 5,
-      name: "Xiaomi Mi 11",
-      desc: "Xiaomi's latest premium phone",
-      price: 60000,
-      color: "#0000ff",
-      image:
-          "https://tse2.mm.bing.net/th?id=OIP.hNPQcCknyV1dcgUSCIA8IQHaMl&pid=Api&P=0&h=220",
-    ),
-    Item(
-      id: 6,
-      name: "Sony Xperia 1",
-      desc: "Sony's flagship with 4K display",
-      price: 80000,
-      color: "#000000",
-      image:
-          "https://tse2.mm.bing.net/th?id=OIP.hNPQcCknyV1dcgUSCIA8IQHaMl&pid=Api&P=0&h=220",
-    ),
-  ];
+  static List<Item> items = [];
 }
 
 class Item {
@@ -73,4 +21,94 @@ class Item {
     required this.color,
     required this.image,
   });
+
+  // factory Item.fromMap(Map<String, dynamic> map) {
+  //   return Item(
+  //     id: map["id"],
+  //     name: map["name"],
+  //     desc: map["desc"],
+  //     price: map["price"],
+  //     color: map["color"],
+  //     image: map["image"],
+  //   );
+  // }
+  // toMap() =>
+  //     {"id": id, "name": name, "desc": desc, "color": color, "image": image};
+
+  Item copyWith({
+    int? id,
+    String? name,
+    String? desc,
+    num? price,
+    String? color,
+    String? image,
+  }) {
+    return Item(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      desc: desc ?? this.desc,
+      price: price ?? this.price,
+      color: color ?? this.color,
+      image: image ?? this.image,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'desc': desc,
+      'price': price,
+      'color': color,
+      'image': image,
+    };
+  }
+
+  factory Item.fromMap(Map<String, dynamic> map) {
+    try {
+      return Item(
+        id: map['id'] as int,
+        name: map['name'] as String,
+        desc: map['desc'] as String,
+        price: map['price'] as num,
+        color: map['color'] as String,
+        image: map['image'] as String,
+      );
+    } catch (e) {
+      print("Error parsing item: $map, Error: $e"); // Log the problematic item
+      throw Exception("Error parsing item");
+    }
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Item.fromJson(String source) =>
+      Item.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'Item(id: $id, name: $name, desc: $desc, price: $price, color: $color, image: $image)';
+  }
+
+  @override
+  bool operator ==(covariant Item other) {
+    if (identical(this, other)) return true;
+
+    return other.id == id &&
+        other.name == name &&
+        other.desc == desc &&
+        other.price == price &&
+        other.color == color &&
+        other.image == image;
+  }
+
+  @override
+  int get hashCode {
+    return id.hashCode ^
+        name.hashCode ^
+        desc.hashCode ^
+        price.hashCode ^
+        color.hashCode ^
+        image.hashCode;
+  }
 }
